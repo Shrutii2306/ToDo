@@ -14,8 +14,8 @@ function App() {
     
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name='AddTask' component={AddTaskScreen}/>
+        <Stack.Screen name="Home" component={Home} options={{headerShown:false}}/>
+        <Stack.Screen name='AddTask' component={AddTaskScreen} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
  
