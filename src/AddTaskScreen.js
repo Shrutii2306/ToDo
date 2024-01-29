@@ -3,18 +3,23 @@ import {View, StyleSheet, Text, TextInput, Button} from 'react-native';
 import tempData from './tempData';
 import firestore from '@react-native-firebase/firestore';
 
-const AddTaskScreen = () => {
+const AddTaskScreen = ({navigation}) => {
 
     const addTasks = async() => {
 
         try{   
-            const docId = await firestore().collection('tasks').add({
+            const docRef = await firestore().collection('tasks');
+            
+            docRef.add({
                 title: title,
                 description: desc,
-                isComplete: false
+                isComplete: false,
+                timeStamp : firestore.FieldValue.serverTimestamp(),
+                id : Date.now()
             })
 
-            console.log('task created with id :',docId);
+            console.log('task created with id :',docRef);
+            navigation.navigate('Home');
         }catch(err){
 
             console.log(err);

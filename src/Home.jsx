@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import {View, StyleSheet, Text, TextInput, Button, FlatList, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, TextInput, Button, FlatList, TouchableOpacity, Image} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-//  import { Input, Icon } from '@rneui/themed';
+import { useIsFocused } from "@react-navigation/native";
 import tempData from './tempData';
+import Task from './components/Task';
 const Home = ({navigation}) => {
 
     const [allTasks,setAllTasks] = useState({});
+    const isFocused = useIsFocused();
 
     const fetchTasks = async() => {
 
         try{
 
             let tasks = [];
-            const tasksCollection = await firestore().collection('tasks').get();            
+            const tasksCollection = await firestore().collection('tasks').orderBy('timeStamp','desc').get();            
             tasksCollection.forEach((task) => {
                 console.log(task.id,task.data());
                 tasks.push(task.data());
@@ -23,40 +25,47 @@ const Home = ({navigation}) => {
         }catch(err){
             console.log(err)
         }
-    //    await db.collection("tasks").get().then((querySnapshot) => {
-    //         querySnapshot.forEach((doc) => {
-    //             // doc.data() is never undefined for query doc snapshots
-    //             console.log(doc.id, " => ", doc.data());
-    //         });
-    //     });
+  
     }
+
+    
 
     useEffect(() => {
 
-        fetchTasks();
+        if(isFocused){ 
+            fetchTasks();
+        }
 
-    },[])
+    },[isFocused])
+
+
     return (
-        <View>
+        <View style={styles.container}>
             
             <FlatList 
-                data={tempData}
+                data={allTasks}
                 renderItem={({item}) => (
 
-                    <View>
-                        <Text>{item.title}</Text>
-                    </View>
+                    <Task item={item}/>
                 )}
 
             />
-            <TextInput placeholder='Enter a Task..'/>
-            <Button title='get' onPress={() => navigation.navigate('AddTask')}/>
-            <Button title='fetch' onPress={fetchTasks}/>
-            <Text>ToDo App</Text>
+        
+        <Button title='get' onPress={() => navigation.navigate('AddTask')}/>
+        <Button title='fetch' onPress={fetchTasks}/>
+        <Text>ToDo App</Text>
         </View>
     );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+    container :{
+
+        flex: 1,
+        justifyContent: 'center'
+    },
+  
+})
 
 export default Home;
