@@ -59,12 +59,22 @@ const Task = ({item}) => {
     return (
         
         <View style={styles.taskContainer}>
-        <Text>{item.title}</Text>
-        <TouchableOpacity style={{borderWidth:2}} onPress={deleteTask}>
-            <Image source={require('../../assets/delete.png')} style={{height:25,width:25}}/></TouchableOpacity>
-        <TouchableOpacity style={{borderWidth:2}} onPress={updateStatus}>
-           {status? <Image source={require('../../assets/greencheckbox.png')} style={{height:25,width:25}}/>:<Image source={require('../../assets/unchecked-checkbox.png')} style={{height:25,width:25}}/>}
-        </TouchableOpacity>
+        <View>
+            <Text style={{fontWeight:'bold',fontSize:17}}>{item.title}</Text>
+            <Text>{item.description}</Text>
+        </View>
+        
+
+        <View style={{flexDirection:'row'}}>
+            <TouchableOpacity onPress={deleteTask} style={{marginHorizontal:5}}>
+                <Image source={require('../../assets/delete.png')} style={{height:25,width:25}}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={updateStatus}>
+            {status? <Image source={require('../../assets/greencheckbox.png')} style={{height:25,width:25}}/>:<Image source={require('../../assets/unchecked-checkbox.png')} style={{height:25,width:25}}/>}
+            </TouchableOpacity>
+        </View>
+       
     </View>
     );
 }
@@ -73,9 +83,15 @@ const styles = StyleSheet.create({
  
     taskContainer:{
 
-        borderWidth:2,
+        borderWidth:1,
+        borderColor:'#AEAEAE',
         borderRadius: 5,
-        flexDirection:'row'
+        flexDirection:'row',
+        justifyContent: 'space-between',
+        paddingVertical:20,
+        paddingHorizontal: 20,
+        marginTop:10,
+        marginHorizontal:15
     }
 })
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {View,Pressable, StyleSheet, Text, TextInput} from 'react-native';
+import {View,Pressable, StyleSheet, Text, TextInput, ToastAndroid} from 'react-native';
 import Button from './components/Button';
 import tempData from './tempData';
 import firestore from '@react-native-firebase/firestore';
@@ -7,9 +7,20 @@ import Heading from './components/Heading';
 
 const AddTaskScreen = ({navigation}) => {
 
+    
+    const [title,setTitle] = useState('');
+    const  [desc, setDesc] = useState('');
+
     const addTasks = async() => {
 
+       
         try{   
+            if(title =='' || desc ==''){
+
+                ToastAndroid.show('One or more fields are empty.', ToastAndroid.SHORT);
+                return;
+            }
+    
             const docRef = firestore().collection('tasks');
             
             await docRef.add({
@@ -28,23 +39,7 @@ const AddTaskScreen = ({navigation}) => {
         }
 
     }
-    const fetchTasks = async() => {
-
-        const tasksCollection = await firestore().collection('tasks').get();
-        
-        tasksCollection.forEach((task) => {
-
-            console.log(task.id);
-        })
-    }
-    const [title,setTitle] = useState('');
-    const  [desc, setDesc] = useState('');
-
-    // const onAddTask = () =>{
-
-    //     tempData.push({title:title, description:desc,isComplete:false});
-    //     console.log(tempData);
-    // }
+    
     return (
         <View>
 
