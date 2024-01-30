@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import {View, StyleSheet, Text, TextInput, Button} from 'react-native';
+import {View,Pressable, StyleSheet, Text, TextInput} from 'react-native';
+import Button from './components/Button';
 import tempData from './tempData';
 import firestore from '@react-native-firebase/firestore';
+import Heading from './components/Heading';
 
 const AddTaskScreen = ({navigation}) => {
 
     const addTasks = async() => {
 
         try{   
-            const docRef = await firestore().collection('tasks');
+            const docRef = firestore().collection('tasks');
             
-            docRef.add({
+            await docRef.add({
                 title: title,
                 description: desc,
                 isComplete: false,
@@ -34,33 +36,53 @@ const AddTaskScreen = ({navigation}) => {
 
             console.log(task.id);
         })
-    //    await db.collection("tasks").get().then((querySnapshot) => {
-    //         querySnapshot.forEach((doc) => {
-    //             // doc.data() is never undefined for query doc snapshots
-    //             console.log(doc.id, " => ", doc.data());
-    //         });
-    //     });
     }
     const [title,setTitle] = useState('');
     const  [desc, setDesc] = useState('');
 
-    const onAddTask = () =>{
+    // const onAddTask = () =>{
 
-        tempData.push({title:title, description:desc,isComplete:false});
-        console.log(tempData);
-    }
+    //     tempData.push({title:title, description:desc,isComplete:false});
+    //     console.log(tempData);
+    // }
     return (
         <View>
 
-            <Text>Add Task</Text>
-            <TextInput placeholder='Enter Title' value={title} onChangeText={(title) => setTitle(title)}/>
-            <TextInput placeholder='Enter Description' value={desc} onChangeText={(desc) => setDesc(desc)}/>
-            <Button title='Add Task' onPress={addTasks}/>
+            <Heading title='Add new task'/>
+            <TextInput style={styles.textInput} placeholder='Enter Title' value={title} onChangeText={(title) => setTitle(title)}/>
+            <TextInput style={styles.textInput} placeholder='Enter Description' value={desc} onChangeText={(desc) => setDesc(desc)}/>
+            <View style={{flexDirection:'row'}}>
+            <Button title='Cancel' color='red' screen='Home' />
+            <Pressable  
+            style={[{backgroundColor:'green'},styles.wrapperCustom]} 
+            onPress={addTasks}><Text style={{color:'white'}}>Save</Text></Pressable>
+            </View>
+            
         </View>
     );
 
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+    textInput : {
+
+        height:50,
+        borderWidth: 1,
+        borderRadius: 10,
+        marginVertical:15,
+        borderColor: '#AEAEAE',
+        marginHorizontal: 18
+    },
+    wrapperCustom: {
+        borderRadius: 8,
+        padding: 10,
+        marginVertical: 10,
+        marginLeft:'auto',
+        marginRight: 'auto',
+        alignItems:'center',
+    
+      },
+})
 
 export default AddTaskScreen;

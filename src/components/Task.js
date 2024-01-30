@@ -56,10 +56,6 @@ const Task = ({item}) => {
         }
     }
 
-    // useEffect(()=>{
-
-    //     getTaskId();
-    // },[])
     return (
         
         <View style={styles.taskContainer}>
