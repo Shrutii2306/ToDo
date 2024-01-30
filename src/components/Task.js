@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import {View, StyleSheet, Text, TextInput, Button, FlatList, TouchableOpacity, Image} from 'react-native';
+import React, {  useState } from 'react';
+import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 const Task = ({item}) => {
 
@@ -29,7 +29,6 @@ const Task = ({item}) => {
                 console.log(item.id);
                 
                 await firestore().collection('tasks').doc(item.id).delete();
-                // setStatus(!(item.data().isComplete));
                 console.log('deleted');
             })
             }catch(err){

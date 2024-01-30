@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {View,Pressable, StyleSheet, Text, TextInput, ToastAndroid} from 'react-native';
 import Button from './components/Button';
-import tempData from './tempData';
 import firestore from '@react-native-firebase/firestore';
 import Heading from './components/Heading';
 
@@ -12,7 +11,6 @@ const AddTaskScreen = ({navigation}) => {
     const  [desc, setDesc] = useState('');
 
     const addTasks = async() => {
-
        
         try{   
             if(title =='' || desc ==''){
@@ -42,15 +40,20 @@ const AddTaskScreen = ({navigation}) => {
     
     return (
         <View>
-
+            {/* Screen Heading */}
             <Heading title='Add new task'/>
+
+            {/* Input Fields */}
             <TextInput style={styles.textInput} placeholder='Enter Title' value={title} onChangeText={(title) => setTitle(title)}/>
+
             <TextInput style={styles.textInput} placeholder='Enter Description' value={desc} onChangeText={(desc) => setDesc(desc)}/>
+
+            {/* Action Buttons*/}
             <View style={{flexDirection:'row'}}>
-            <Button title='Cancel' color='red' screen='Home' />
-            <Pressable  
-            style={[{backgroundColor:'green'},styles.wrapperCustom]} 
-            onPress={addTasks}><Text style={{color:'white'}}>Save</Text></Pressable>
+                <Button title='Cancel' color='red' screen='Home' />
+                <Pressable  
+                style={[{backgroundColor:'green'},styles.wrapperCustom]} 
+                onPress={addTasks}><Text style={{color:'white'}}>Save</Text></Pressable>
             </View>
             
         </View>

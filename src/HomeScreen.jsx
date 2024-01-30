@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {View, StyleSheet, Text, TextInput, FlatList, TouchableOpacity, Image, Pressable} from 'react-native';
+import {View, StyleSheet, FlatList,  } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { useIsFocused } from "@react-navigation/native";
-import tempData from './tempData';
 import Task from './components/Task';
 import Button from './components/Button';
 import Heading from './components/Heading';
@@ -43,6 +42,7 @@ const Home = ({navigation}) => {
 
     return (
         <View style={styles.container}>
+
             <Heading title='To-Do List'/>
             <FlatList 
                 data={allTasks}
