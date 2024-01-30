@@ -36,7 +36,7 @@ const Home = ({navigation}) => {
             fetchTasks();
         }
 
-    },[isFocused])
+    },[isFocused,allTasks])
 
 
     return (
